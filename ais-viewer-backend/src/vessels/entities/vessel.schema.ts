@@ -16,7 +16,7 @@ export class Vessel extends Document {
       default: 'Point',
     },
     coordinates: {
-      type: [Number], // [lng, lat]
+      type: [Number],
       index: '2dsphere',
     },
   })
