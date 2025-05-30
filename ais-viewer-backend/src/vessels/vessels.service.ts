@@ -13,28 +13,24 @@ export class VesselsService {
   async findFreshInBbox(bbox: number[][]) {
     const [[minLng, minLat], [maxLng, maxLat]] = bbox;
 
-    const bboxString = JSON.stringify(bbox);
-
-    console.log(bboxString)
 
     const now = new Date();
     const twoMinutesAgo = new Date(now.getTime() - 2 * 60 * 1000);
 
-    return null;
 
-    // return this.vesselModel.find(
-    //   {
-    //     updatedAt: { $gte: twoMinutesAgo },
-    //     location: {
-    //       $geoWithin: {
-    //         $box: [
-    //           [minLng, minLat],
-    //           [maxLng, maxLat],
-    //         ],
-    //       },
-    //     },
-    //   },
-    //   { mmsi: 1, name: 1, location: 1, updatedAt: 1 },
-    // );
+    return this.vesselModel.find(
+      {
+        updatedAt: { $gte: twoMinutesAgo },
+        location: {
+          $geoWithin: {
+            $box: [
+              [minLng, minLat],
+              [maxLng, maxLat],
+            ],
+          },
+        },
+      },
+      { mmsi: 1, name: 1, location: 1, updatedAt: 1 },
+    );
   }
 }

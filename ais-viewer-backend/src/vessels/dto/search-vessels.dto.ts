@@ -1,9 +1,15 @@
-import { IsArray, ArrayMinSize } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class SearchVesselsDto {
-  @IsArray()
-  @ArrayMinSize(2)
   @Type(() => Number)
-  bbox: number[][];
+  minLat: number;
+
+  @Type(() => Number)
+  minLng: number;
+
+  @Type(() => Number)
+  maxLat: number;
+
+  @Type(() => Number)
+  maxLng: number;
 }

@@ -8,6 +8,10 @@ export class VesselsController {
 
   @Get()
   findWithinBbox(@Query() query: SearchVesselsDto) {
-    return this.vesselsService.findFreshInBbox(query.bbox);
+    const bbox: number[][] = [
+      [query.minLng, query.minLat],
+      [query.maxLng, query.maxLat],
+    ];
+    return this.vesselsService.findFreshInBbox(bbox);
   }
 }
