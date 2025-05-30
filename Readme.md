@@ -54,7 +54,7 @@ The application will be developed using the Flux architecture to prioritize modu
 └── package.json
 ```
 
-
+/backend
 ```
 src/
 │
