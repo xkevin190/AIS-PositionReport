@@ -54,6 +54,27 @@ The application will be developed using the Flux architecture to prioritize modu
 └── package.json
 ```
 
+
+```
+src/
+│
+├── app.module.ts
+├── main.ts
+│
+├── ais/
+│   ├── ais.module.ts
+│   ├── ais.service.ts
+│   ├── ais.gateway.ts
+├── vessels/
+│   ├── vessels.controller.ts
+│   ├── vessels.module.ts
+│   ├── vessels.service.ts
+│   ├── entities/
+│   │   └── vessel.schema.ts       # Esquema Mongoose optimizado
+│   └── dto/
+│       └── search-vessels.dto.ts
+```
+
 ## WorkFlow
 
 ```
