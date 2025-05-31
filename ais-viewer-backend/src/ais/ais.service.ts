@@ -12,9 +12,10 @@ export class AisService {
     private readonly vesselModel: Model<Vessel>,
   ) {}
 
-  async handlePositionReport(msg: any): Promise<void> {
-    const meta = msg.MetaData;
+  async handlePositionReport(values: any): Promise<void> {
+    const meta = values.MetaData;
     if (!meta?.MMSI || !meta.latitude || !meta.longitude) return;
+
     try {
       await this.vesselModel.updateOne(
         { mmsi: meta.MMSI },
@@ -26,6 +27,7 @@ export class AisService {
               type: 'Point',
               coordinates: [meta.longitude, meta.latitude],
             },
+            course: values.Message.PositionReport?.Cog ?? null,
             updatedAt: new Date(meta.time_utc),
           },
         },

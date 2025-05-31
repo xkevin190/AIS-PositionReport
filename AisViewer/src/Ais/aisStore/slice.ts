@@ -12,24 +12,26 @@ export const fetchVessels = createAsyncThunk<Vessel[], FetchVesselsArgs>(
   'vessels/fetchVessels',
   async ({ minLat, minLng, maxLat, maxLng }, thunkAPI) => {
     try {
-      console.log('Fetching vessels with bounds:', { minLat, minLng, maxLat, maxLng });
       const res = await api.get('/vessels', {
         params: { minLat, minLng, maxLat, maxLng },
       });
-      console.log('Fetched vessels:', res.data);
       return res.data;
     } catch (err: any) {
-        console.error('Error fetching vessels:', err);
-    //   return thunkAPI.rejectWithValue(err.response?.data?.message || 'Error fetching vessels');
+        return thunkAPI.rejectWithValue(err.response?.data?.message || 'Error fetching vessels');
     }
   }
 );
 
-
 const aisSlice = createSlice({
   name: 'ais',
   initialState,
-  reducers: {},
+  reducers: {
+    clearVessels: (state) => {
+      state.data = [];
+      state.loading = false;
+      state.error = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchVessels.pending, (state) => {
@@ -37,7 +39,7 @@ const aisSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchVessels.fulfilled, (state, action: PayloadAction<Vessel[]>) => {
-        // state.data = action.payload;
+        state.data = action.payload;
         state.loading = false;
       })
       .addCase(fetchVessels.rejected, (state, action: PayloadAction<any>) => {
@@ -47,5 +49,5 @@ const aisSlice = createSlice({
   }
 });
 
-export const {  } = aisSlice.actions;
+export const { clearVessels } = aisSlice.actions;
 export default aisSlice.reducer;

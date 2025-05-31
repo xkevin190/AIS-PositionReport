@@ -27,7 +27,7 @@ export class AisGateway implements OnModuleInit {
             ],
           ],
           Apikey: process.env.AISSTREAM_API_KEY,
-          filterMessageTypess: ['PositionReport'],
+          filterMessageTypes: ['PositionReport'],
         }),
       );
     });

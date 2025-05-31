@@ -8,6 +8,10 @@ export class Vessel extends Document {
 
   @Prop()
   name: string;
+  
+  @Prop()
+  course: number;
+
 
   @Prop({
     type: {

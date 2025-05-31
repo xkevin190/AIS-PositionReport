@@ -30,7 +30,7 @@ export class VesselsService {
           },
         },
       },
-      { mmsi: 1, name: 1, location: 1, updatedAt: 1 },
+      { mmsi: 1, name: 1, location: 1, updatedAt: 1, course: 1 },
     );
   }
 }

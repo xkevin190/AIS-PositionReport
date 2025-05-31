@@ -1,6 +1,7 @@
 export interface Vessel {
     mmsi: number;
     name: string;
+    course: number | null;
     location: {
       type: 'Point';
       coordinates: [number, number];
