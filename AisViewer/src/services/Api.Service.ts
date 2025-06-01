@@ -1,7 +1,9 @@
 // src/services/api.ts
 import axios from 'axios';
+import config from 'react-native-config';
 
-const baseURL = `http:/192.168.0.10:3000`
+
+const baseURL = config.BASE_URL ?? ''
 
 const api = axios.create({
   baseURL,
