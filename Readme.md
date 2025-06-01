@@ -2,6 +2,8 @@
 
 AIS is used by vessels to broadcast their position, speed, and course to avoid collisions. This system connects to `aisstream.io` to ingest real-time AIS PositionReport messages and visualizes vessel data on a map for mobile users.
 
+App Example
+
 
 ## Tecnologies 
 
@@ -16,7 +18,7 @@ Frontend
 Backend 
 
 1) NestJS
-2) MongoDB ----> Optional but not definitive
+2) MongoDB 
 3) Webscoket 
 4) aisstream.io
 5) TypeScript
@@ -25,9 +27,36 @@ Backend
 
 The application will be developed using the Flux architecture to prioritize modularity and ensure a clear separation between business logic and the views.
 
-
-![Screenshot 2025-05-27 at 13 16 04](https://github.com/user-attachments/assets/61097b55-edd9-4bde-83fc-f17f9d7bbc52)
-
+```
+              +-----------+
+              /             \
+             /               \
+    +--------+    View        +---------+
+    |        \               /          |
+    |         +-----------+-+           |
+    |                     |             |
+    |                     v             |
+    |              +-----------+        |
+    |              |  Actions  |        |
+    |              +-----------+        |
+    |                     |             |
+    |       (Async call)  v             |
+    |             +---------------+     |
+    |             |  API Request  |     |
+    |             +---------------+     |
+    |                     |             |
+    |                     v             |
+    |             +---------------+     |
+    |             |  Dispatcher   |     |
+    |             +---------------+     |
+    |                     |             |
+    |                     v             |
+    |              +-----------+        |
+    |              |   Store   |--------+
+    |              +-----------+
+    |                     |
+    +---------------------+
+```
 
 
 ## 📁 Folder Structure
@@ -41,7 +70,7 @@ The application will be developed using the Flux architecture to prioritize modu
 │   │     ├── AISStore/
 │   │     ├── views/
 │   │     ├── types.ts
-│   ├── /hooks               # Global Hooks
+│   ├── /hooks               
 │   ├── /services
 │   │        |
 |   |        |── API Service
@@ -54,8 +83,9 @@ The application will be developed using the Flux architecture to prioritize modu
 └── package.json
 ```
 
-/backend
+
 ```
+/backend
 src/
 │
 ├── app.module.ts
@@ -70,7 +100,7 @@ src/
 │   ├── vessels.module.ts
 │   ├── vessels.service.ts
 │   ├── entities/
-│   │   └── vessel.schema.ts       # Esquema Mongoose optimizado
+│   │   └── vessel.schema.ts  
 │   └── dto/
 │       └── search-vessels.dto.ts
 ```
@@ -78,6 +108,7 @@ src/
 ## WorkFlow
 
 ```
+Fronted
 +--------------------------------+
 |      🚀 App Initialization     |
 +--------------------------------+
@@ -123,20 +154,18 @@ src/
 |     in the next polling request                |
 +------------------------------------------------+
 
+backend
 +------------------------------------------------+
          ┌─────────────┐
          │aisstream.io│
          └─────┬───────┘
                │ (WebSocket - PositionReport)
                ▼
-        ┌─────────────────┐
-        │     Backend     │
-        │ (Node.js, Nest) │
-        └─────────────────┘
+        ┌─────────────────┐           ┌─────────────────┐
+        │     Backend     |___________|   Database      |
+        │ (Node.js, Nest) │           |                 |
+        └─────────────────┘           └─────────────────┘
                │
-        ┌──────┴──────────────┐
-        │    database         │
-        └─────────────────────┘
                │
             REST API 
                │
@@ -144,7 +173,7 @@ src/
      │     React Native │
      │   + Mapbox SDK   │
      └──────────────────┘
-
+```
 
 ## references 
 
