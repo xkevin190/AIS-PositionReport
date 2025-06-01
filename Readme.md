@@ -1,5 +1,7 @@
 # AIS-PositionReport 
 
+This system consists of a mobile application (React Native) connected to a backend (NestJS) that receives and processes AIS (Automatic Identification System) data from vessels in real time.
+
 App Example
 
 
