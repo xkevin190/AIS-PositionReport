@@ -5,6 +5,7 @@ import {clearVessels, fetchVessels} from '../aisStore/slice';
 import {Position} from '@rnmapbox/maps/lib/typescript/src/types/Position';
 import useAppSelector from '../../hooks/useAppSelector';
 import {getCurrentVessels} from '../aisStore/selectors';
+import { AppState, AppStateStatus } from 'react-native';
 
 type Coordinates = {
   latitude: number;
@@ -19,6 +20,8 @@ export const useMap = () => {
   const [initialFetch, setInitialFetch] = useState<boolean>(false);
   const fetchIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const lastBoundsRef = useRef<string | null>(null);
+  const appState = useRef<AppStateStatus>(AppState.currentState);
+
 
   const getVessels = async (bounds: [Position, Position]) => {
     const [[minLng, minLat], [maxLng, maxLat]] = bounds;
@@ -68,22 +71,39 @@ export const useMap = () => {
     });
   };
 
-  useEffect(() => {
+  const startFetchInterval = () => {
+    if (fetchIntervalRef.current) return;
     fetchIntervalRef.current = setInterval(async () => {
       const bounds = await mapRef.current?.getVisibleBounds();
       const zoom = await mapRef.current?.getZoom();
-
-      if (bounds && zoom && zoom >= 12) {
-        await getVessels(bounds);
+      if (bounds && zoom && zoom >= 12)  {
+        getVessels(bounds);
       }
     }, 10000);
+  };
+
+  const stopFetchInterval = () => {
+    if (!fetchIntervalRef.current) return;
+    clearInterval(fetchIntervalRef.current);
+    fetchIntervalRef.current = null;
+  };
+
+  useEffect(() => {
+    const handleAppStateChange = (nextState: AppStateStatus) => {
+      const isForeground = nextState === 'active';
+      isForeground ? startFetchInterval() : stopFetchInterval();
+      appState.current = nextState;
+    };
+
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    if (AppState.currentState === 'active') startFetchInterval();
 
     return () => {
-      if (fetchIntervalRef.current) {
-        clearInterval(fetchIntervalRef.current);
-      }
+      subscription.remove();
+      stopFetchInterval();
     };
   }, []);
+
 
   return {
     mapRef,

@@ -4,8 +4,6 @@ import {View, StyleSheet} from 'react-native';
 import {useMap} from '../hooks/useMap';
 import config from 'react-native-config'
 
-console.log('Mapbox Access Token:', config.MAPBOX_TOKEN);
-
 MapboxGL.setAccessToken(config.MAPBOX_TOKEN ?? ''); 
 
 const Map = () => {

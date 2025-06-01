@@ -8,12 +8,6 @@ export const fetchVessels = createAsyncThunk<Vessel[], FetchVesselsArgs>(
   'vessels/fetchVessels',
   async ({minLat, minLng, maxLat, maxLng}, thunkAPI) => {
     try {
-      console.log('Fetching vessels with bounds:', {
-        minLat,
-        minLng,
-        maxLat,
-        maxLng,
-      });
       const res = await api.get('/vessels', {
         params: {minLat, minLng, maxLat, maxLng},
       });
