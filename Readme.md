@@ -16,7 +16,7 @@ Frontend
 Backend 
 
 1) NestJS
-2) MongoDB ----> Optional but not definitive
+2) MongoDB 
 3) Webscoket 
 4) aisstream.io
 5) TypeScript
@@ -54,8 +54,9 @@ The application will be developed using the Flux architecture to prioritize modu
 └── package.json
 ```
 
-/backend
+
 ```
+/backend
 src/
 │
 ├── app.module.ts
