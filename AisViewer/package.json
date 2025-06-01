@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@rnmapbox/maps": "^10.1.39",
     "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react-native": "^13.2.0",
     "add": "^2.0.6",
     "axios": "^1.9.0",
     "react": "19.0.0",
