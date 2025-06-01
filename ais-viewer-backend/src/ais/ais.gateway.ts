@@ -27,18 +27,15 @@ export class AisGateway implements OnModuleInit {
             ],
           ],
           Apikey: process.env.AISSTREAM_API_KEY,
-          filterMessageTypes: ['PositionReport'],
+          filterMessageTypess: ['PositionReport'],
         }),
       );
     });
 
     this.socket.on('message', async (data: WebSocket.RawData) => {
       try {
-        // console.log('Received data from AIS stream:', data.toString());
         const parsedMessage = JSON.parse(data.toString());
-
         this.aisService.handlePositionReport(parsedMessage);
-
       } catch (err) {
         this.logger.error('Error parsing AIS message', err);
       }

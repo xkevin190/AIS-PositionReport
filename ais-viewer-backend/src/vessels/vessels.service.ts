@@ -13,10 +13,8 @@ export class VesselsService {
   async findFreshInBbox(bbox: number[][]) {
     const [[minLng, minLat], [maxLng, maxLat]] = bbox;
 
-
     const now = new Date();
     const twoMinutesAgo = new Date(now.getTime() - 2 * 60 * 1000);
-
 
     return this.vesselModel.find(
       {

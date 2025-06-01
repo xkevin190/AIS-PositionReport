@@ -13,6 +13,7 @@ export class AisService {
   ) {}
 
   async handlePositionReport(values: any): Promise<void> {
+
     const meta = values.MetaData;
     if (!meta?.MMSI || !meta.latitude || !meta.longitude) return;
 
@@ -27,13 +28,14 @@ export class AisService {
               type: 'Point',
               coordinates: [meta.longitude, meta.latitude],
             },
-            course: values.Message.PositionReport?.Cog ?? null,
+            course: values.Message.PositionReport.Cog,
             updatedAt: new Date(meta.time_utc),
           },
         },
         { upsert: true },
       );
     } catch (error) {
+      console.error(`Failed to save vessel ${meta.MMSI}`, error);
       this.logger.error(`Failed to save vessel ${meta.MMSI}`, error);
     }
   }

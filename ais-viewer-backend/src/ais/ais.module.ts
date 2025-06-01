@@ -6,9 +6,7 @@ import { Vessel, VesselSchema } from 'vessels/entities/vessel.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Vessel.name, schema: VesselSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Vessel.name, schema: VesselSchema }]),
   ],
   providers: [AisService, AisGateway],
 })
