@@ -35,7 +35,6 @@ export class AisService {
         { upsert: true },
       );
     } catch (error) {
-      console.error(`Failed to save vessel ${meta.MMSI}`, error);
       this.logger.error(`Failed to save vessel ${meta.MMSI}`, error);
     }
   }
