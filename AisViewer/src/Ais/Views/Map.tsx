@@ -5,21 +5,35 @@ import { useMap } from '../hooks/useMap';
 
 MapboxGL.setAccessToken('pk.eyJ1IjoieGtldmluMTkwIiwiYSI6ImNtYmJkc2RjMDFlejkybXMxMWprdnloMDEifQ.q2fVCWP-cPQ69vuJEgs1Bg');
 
-<MapboxGL.Images images={{ ship: require('../../assets/ship.png') }} />
+
+
 
 const Map = () => {
+  const {
+    mapRef,
+    handleRegionChange,
+    cameraRef,
+    executedInitialFetch,
+    vessels,
+  } = useMap();
 
-   const { mapRef, handleRegionChange, cameraRef, executedInitialFetch, vessels } = useMap();
-   
+
   return (
     <View style={styles.page}>
-      <MapboxGL.MapView style={styles.map} ref={mapRef} onMapIdle={()=>{
-        handleRegionChange();
-      }}>
-      <MapboxGL.Images images={{ ship: require('../../assets/ship.png') }} />
+      <MapboxGL.MapView
+        style={styles.map}
+        ref={mapRef}
+        pitchEnabled={false}
+        rotateEnabled={false}
+        onMapIdle={handleRegionChange}
+      >
+        <MapboxGL.Images images={{ ship: require('../../assets/ship.png') }} />
 
-      <MapboxGL.ShapeSource
+        <MapboxGL.ShapeSource
           id="vessels"
+          cluster={true}
+          clusterRadius={50}
+                  
           shape={{
             type: 'FeatureCollection',
             features: vessels.map((vessel) => ({
@@ -28,7 +42,7 @@ const Map = () => {
               properties: {
                 mmsi: vessel.mmsi,
                 name: vessel.name,
-                course: vessel?.course ,
+                course: vessel?.course,
               },
             })),
           }}
@@ -38,20 +52,26 @@ const Map = () => {
             style={{
               iconImage: 'ship',
               iconAllowOverlap: true,
-              iconSize: 0.05,  
+              iconSize: 0.05,
               iconRotate: ['get', 'course'],
               iconRotationAlignment: 'map',
             }}
           />
         </MapboxGL.ShapeSource>
+
+
         <MapboxGL.Camera
           ref={cameraRef}
           zoomLevel={12}
           followUserLocation={false}
         />
-        <MapboxGL.UserLocation visible={false} onUpdate={(location)=>{
-            executedInitialFetch(location.coords)
-        }}/>
+
+        <MapboxGL.UserLocation
+          visible={false}
+          onUpdate={(location) => {
+            executedInitialFetch(location.coords);
+          }}
+        />
       </MapboxGL.MapView>
     </View>
   );
