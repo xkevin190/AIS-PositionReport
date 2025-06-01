@@ -144,7 +144,7 @@ src/
      │     React Native │
      │   + Mapbox SDK   │
      └──────────────────┘
-
+```
 
 ## references 
 
