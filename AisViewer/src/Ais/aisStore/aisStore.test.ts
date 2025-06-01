@@ -1,47 +1,43 @@
 // aisSlice.test.ts
 
-import reducer, { clearVessels, fetchVessels } from './slice';
+import reducer, {clearVessels, fetchVessels} from './slice';
 import api from '../../services/Api.Service';
-import { FetchVesselsArgs, Vessel } from '../types';
+import {FetchVesselsArgs, Vessel} from '../types';
 import store from '../../mocks/mockStore';
-
 
 jest.mock('../../services/Api.Service');
 
 const mockedApi = api as jest.Mocked<typeof api>;
 
-
 const initialState = {
   data: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 const bounds: FetchVesselsArgs = {
   minLat: 0,
   minLng: 0,
   maxLat: 10,
-  maxLng: 10
+  maxLng: 10,
 };
 
 const vesselsMock: Vessel[] = [
-    {
-      mmsi: 123456789,
-      name: 'Test Ship',
-      location: {
-        type: 'Point',
-        coordinates: [10, 20],
-      },
-      course: 90,
+  {
+    mmsi: 123456789,
+    name: 'Test Ship',
+    location: {
+      type: 'Point',
+      coordinates: [10, 20],
     },
-  ];
+    course: 90,
+  },
+];
 
 describe('aisSlice integration (thunk + reducer)', () => {
   it('should handle successful fetchVessels dispatch', async () => {
+    mockedApi.get.mockResolvedValueOnce({data: vesselsMock});
 
-    mockedApi.get.mockResolvedValueOnce({ data: vesselsMock });
-
-    
     const result = await store.dispatch(fetchVessels(bounds));
 
     const state = store.getState().vessels;
@@ -54,13 +50,12 @@ describe('aisSlice integration (thunk + reducer)', () => {
 
   it('should handle failed fetchVessels dispatch', async () => {
     mockedApi.get.mockRejectedValueOnce({
-      response: { data: { message: 'API failed' } }
+      response: {data: {message: 'API failed'}},
     });
 
-    
     const result = await store.dispatch(fetchVessels(bounds));
 
-    const state = store.getState().vessels
+    const state = store.getState().vessels;
 
     expect(result.type).toBe('vessels/fetchVessels/rejected');
     expect(state.loading).toBe(false);
@@ -71,7 +66,7 @@ describe('aisSlice integration (thunk + reducer)', () => {
     const populatedState = {
       data: vesselsMock,
       loading: true,
-      error: 'some error'
+      error: 'some error',
     };
 
     const newState = reducer(populatedState, clearVessels());

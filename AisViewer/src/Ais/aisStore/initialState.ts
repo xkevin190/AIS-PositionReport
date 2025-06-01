@@ -1,8 +1,7 @@
-import { AisState } from "../types";
-
+import {AisState} from '../types';
 
 export const initialState: AisState = {
-    data: [],
-    loading: false,
-    error: null,
-  };
+  data: [],
+  loading: false,
+  error: null,
+};

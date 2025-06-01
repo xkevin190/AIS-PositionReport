@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import aisReducer from '../Ais/aisStore/slice';
 
 const store = configureStore({
@@ -6,6 +6,5 @@ const store = configureStore({
     vessels: aisReducer,
   },
 });
-
 
 export default store;

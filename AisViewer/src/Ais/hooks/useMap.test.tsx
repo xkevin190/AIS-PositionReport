@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useMap } from '../hooks/useMap';
+import {renderHook, act} from '@testing-library/react-hooks';
+import {useMap} from '../hooks/useMap';
 import * as redux from 'react-redux';
 import MapboxGL from '@rnmapbox/maps';
 
@@ -15,10 +15,10 @@ const mockDispatch = jest.fn();
 jest.mock('../../hooks/useAppDispatch', () => () => mockDispatch);
 jest.mock('../../hooks/useAppSelector', () => () => []);
 
-import { fetchVessels, clearVessels } from '../aisStore/slice';
+import {fetchVessels, clearVessels} from '../aisStore/slice';
 jest.mock('../aisStore/slice', () => ({
-  fetchVessels: jest.fn(() => ({ type: 'FETCH_VESSELS' })),
-  clearVessels: jest.fn(() => ({ type: 'CLEAR_VESSELS' })),
+  fetchVessels: jest.fn(() => ({type: 'FETCH_VESSELS'})),
+  clearVessels: jest.fn(() => ({type: 'CLEAR_VESSELS'})),
 }));
 
 const mockMapRef = {
@@ -34,17 +34,17 @@ describe('useMap hook', () => {
   });
 
   it('should initialize map refs and state correctly', () => {
-    const { result } = renderHook(() => useMap());
+    const {result} = renderHook(() => useMap());
     expect(result.current.mapRef).toBeDefined();
     expect(result.current.cameraRef).toBeDefined();
     expect(result.current.initialFetch).toBe(false);
   });
 
   it('should execute initial fetch only once with valid coords', () => {
-    const { result } = renderHook(() => useMap());
+    const {result} = renderHook(() => useMap());
 
     const mockSetCamera = jest.fn();
-    result.current.cameraRef.current = { 
+    result.current.cameraRef.current = {
       setCamera: mockSetCamera,
       fitBounds: jest.fn(),
       flyTo: jest.fn(),
@@ -52,21 +52,23 @@ describe('useMap hook', () => {
       zoomTo: jest.fn(),
     };
 
-
     act(() => {
-      result.current.executedInitialFetch({ latitude: 1, longitude: 1 });
+      result.current.executedInitialFetch({latitude: 1, longitude: 1});
     });
 
     expect(result.current.initialFetch).toBe(true);
     expect(mockSetCamera).toHaveBeenCalledWith({
-        centerCoordinate: [1, 1],
-        zoomLevel: 12,
-      });
+      centerCoordinate: [1, 1],
+      zoomLevel: 12,
+    });
   });
 
   it('should skip fetch when bounds have not changed', async () => {
-    const { result } = renderHook(() => useMap());
-    const bounds = [[0, 0], [1, 1]];
+    const {result} = renderHook(() => useMap());
+    const bounds = [
+      [0, 0],
+      [1, 1],
+    ];
 
     mockMapRef.current.getVisibleBounds = jest.fn().mockResolvedValue(bounds);
     mockMapRef.current.getZoom = jest.fn().mockResolvedValue(13);

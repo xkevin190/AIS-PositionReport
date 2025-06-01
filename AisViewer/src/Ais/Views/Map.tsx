@@ -1,21 +1,12 @@
 import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
-import { View, StyleSheet } from 'react-native';
-import { useMap } from '../hooks/useMap';
-import Config from 'react-native-config';
+import {View, StyleSheet} from 'react-native';
+import {useMap} from '../hooks/useMap';
 
-
-MapboxGL.setAccessToken(Config.MAPBOX_TOKEN ?? '');
 
 const Map = () => {
-  const {
-    mapRef,
-    handleRegionChange,
-    cameraRef,
-    executedInitialFetch,
-    vessels,
-  } = useMap();
-
+  const {mapRef, handleRegionChange, cameraRef, executedInitialFetch, vessels} =
+    useMap();
 
   return (
     <View style={styles.page}>
@@ -24,18 +15,16 @@ const Map = () => {
         ref={mapRef}
         pitchEnabled={false}
         rotateEnabled={false}
-        onMapIdle={handleRegionChange}
-      >
-        <MapboxGL.Images images={{ ship: require('../../assets/ship.png') }} />
+        onMapIdle={handleRegionChange}>
+        <MapboxGL.Images images={{ship: require('../../assets/ship.png')}} />
 
         <MapboxGL.ShapeSource
           id="vessels"
           cluster={true}
           clusterRadius={50}
-          
           shape={{
             type: 'FeatureCollection',
-            features: vessels.map((vessel) => ({
+            features: vessels.map(vessel => ({
               type: 'Feature',
               geometry: vessel.location,
               properties: {
@@ -44,8 +33,7 @@ const Map = () => {
                 course: vessel?.course,
               },
             })),
-          }}
-        >
+          }}>
           <MapboxGL.SymbolLayer
             id="clustered-count"
             filter={['has', 'point_count']}
@@ -81,7 +69,6 @@ const Map = () => {
           />
         </MapboxGL.ShapeSource>
 
-
         <MapboxGL.Camera
           ref={cameraRef}
           zoomLevel={12}
@@ -90,7 +77,7 @@ const Map = () => {
 
         <MapboxGL.UserLocation
           visible={false}
-          onUpdate={(location) => {
+          onUpdate={location => {
             executedInitialFetch(location.coords);
           }}
         />
