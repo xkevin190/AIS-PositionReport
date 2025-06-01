@@ -2,7 +2,11 @@ import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import {View, StyleSheet} from 'react-native';
 import {useMap} from '../hooks/useMap';
+import config from 'react-native-config'
 
+console.log('Mapbox Access Token:', config.MAPBOX_TOKEN);
+
+MapboxGL.setAccessToken(config.MAPBOX_TOKEN ?? ''); 
 
 const Map = () => {
   const {mapRef, handleRegionChange, cameraRef, executedInitialFetch, vessels} =
