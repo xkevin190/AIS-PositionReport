@@ -5,9 +5,6 @@ import { useMap } from '../hooks/useMap';
 
 MapboxGL.setAccessToken('pk.eyJ1IjoieGtldmluMTkwIiwiYSI6ImNtYmJkc2RjMDFlejkybXMxMWprdnloMDEifQ.q2fVCWP-cPQ69vuJEgs1Bg');
 
-
-
-
 const Map = () => {
   const {
     mapRef,
@@ -33,7 +30,7 @@ const Map = () => {
           id="vessels"
           cluster={true}
           clusterRadius={50}
-                  
+          
           shape={{
             type: 'FeatureCollection',
             features: vessels.map((vessel) => ({
@@ -48,7 +45,30 @@ const Map = () => {
           }}
         >
           <MapboxGL.SymbolLayer
+            id="clustered-count"
+            filter={['has', 'point_count']}
+            style={{
+              textField: ['get', 'point_count'],
+              textSize: 14,
+              textColor: '#000000',
+              textHaloColor: '#ffffff',
+              textHaloWidth: 1.5,
+              textIgnorePlacement: true,
+              textAllowOverlap: true,
+            }}
+          />
+          <MapboxGL.CircleLayer
+            id="cluster-circle"
+            filter={['has', 'point_count']}
+            style={{
+              circleColor: '#f28a25',
+              circleRadius: 18,
+              circleOpacity: 0.8,
+            }}
+          />
+          <MapboxGL.SymbolLayer
             id="vessel-icons"
+            filter={['!', ['has', 'point_count']]} // muestra barcos individuales siempre que no estén en un cluster
             style={{
               iconImage: 'ship',
               iconAllowOverlap: true,

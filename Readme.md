@@ -144,3 +144,9 @@ src/
      │     React Native │
      │   + Mapbox SDK   │
      └──────────────────┘
+
+
+## references 
+
+1) https://tonystrawberry.hashnode.dev/displaying-a-map-with-clusters-in-react-native-using-mapbox
+
