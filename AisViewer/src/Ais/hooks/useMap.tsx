@@ -18,7 +18,6 @@ export const useMap = () => {
     const dispatch = useAppDispatch();
     const  vessels = useAppSelector(getCurrentVessels)
     const [initialFetch, setInitialFetch] = useState<boolean>(false);
-    const lastFetchTimeRef = useRef<number>(0);
     const fetchIntervalRef = useRef<NodeJS.Timeout | null>(null);
     const lastBoundsRef = useRef<string | null>(null);
 
@@ -41,7 +40,6 @@ export const useMap = () => {
             const boundsKey = JSON.stringify(bounds);
             
             if(boundsKey === lastBoundsRef.current) {
-                console.log("Bounds have not changed, skipping fetch");
                 return;
             }
             
