@@ -68,7 +68,7 @@ The application will be developed using the Flux architecture to prioritize modu
 │   │     ├── AISStore/
 │   │     ├── views/
 │   │     ├── types.ts
-│   ├── /hooks               # Global Hooks
+│   ├── /hooks               
 │   ├── /services
 │   │        |
 |   |        |── API Service
@@ -98,7 +98,7 @@ src/
 │   ├── vessels.module.ts
 │   ├── vessels.service.ts
 │   ├── entities/
-│   │   └── vessel.schema.ts       # Esquema Mongoose optimizado
+│   │   └── vessel.schema.ts  
 │   └── dto/
 │       └── search-vessels.dto.ts
 ```
