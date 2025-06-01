@@ -25,9 +25,36 @@ Backend
 
 The application will be developed using the Flux architecture to prioritize modularity and ensure a clear separation between business logic and the views.
 
-
-![Screenshot 2025-05-27 at 13 16 04](https://github.com/user-attachments/assets/61097b55-edd9-4bde-83fc-f17f9d7bbc52)
-
+```
+              +-----------+
+              /             \
+             /               \
+    +--------+    View        +---------+
+    |        \               /          |
+    |         +-----------+-+           |
+    |                     |             |
+    |                     v             |
+    |              +-----------+        |
+    |              |  Actions  |        |
+    |              +-----------+        |
+    |                     |             |
+    |       (Async call)  v             |
+    |             +---------------+     |
+    |             |  API Request  |     |
+    |             +---------------+     |
+    |                     |             |
+    |                     v             |
+    |             +---------------+     |
+    |             |  Dispatcher   |     |
+    |             +---------------+     |
+    |                     |             |
+    |                     v             |
+    |              +-----------+        |
+    |              |   Store   |--------+
+    |              +-----------+
+    |                     |
+    +---------------------+
+```
 
 
 ## 📁 Folder Structure
