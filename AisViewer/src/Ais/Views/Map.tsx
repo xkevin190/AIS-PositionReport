@@ -2,8 +2,13 @@ import React from 'react';
 import MapboxGL from '@rnmapbox/maps';
 import { View, StyleSheet } from 'react-native';
 import { useMap } from '../hooks/useMap';
+import Config from 'react-native-config';
 
-MapboxGL.setAccessToken('pk.eyJ1IjoieGtldmluMTkwIiwiYSI6ImNtYmJkc2RjMDFlejkybXMxMWprdnloMDEifQ.q2fVCWP-cPQ69vuJEgs1Bg');
+const token = Config.MAPBOX_TOKEN;
+
+console.log('Mapbox Token:', token);
+
+MapboxGL.setAccessToken(Config.MAPBOX_TOKEN ?? '');
 
 const Map = () => {
   const {
