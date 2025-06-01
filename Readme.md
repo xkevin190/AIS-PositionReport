@@ -1,7 +1,5 @@
 # AIS-PositionReport 
 
-AIS is used by vessels to broadcast their position, speed, and course to avoid collisions. This system connects to `aisstream.io` to ingest real-time AIS PositionReport messages and visualizes vessel data on a map for mobile users.
-
 App Example
 
 
