@@ -15,7 +15,7 @@ Frontend
 1) React Native CLI
 2) Mapbox
 3) Redux Toolkit 
-4) Fetch
+4) Axios
 5) TypeScript
 
 Backend 
